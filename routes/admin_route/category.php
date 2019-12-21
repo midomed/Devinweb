@@ -4,23 +4,29 @@
 /**
  *  get list of categories
  */
-Route::GET('category', 'CategoryController@index')->name('category.index');
+Route::GET('categories', 'CategoryController@index')->name('category.index');
 
 
 /**
  *  get one category
  */
-Route::GET('category/{id}', 'CategoryController@index')->name('category.index');
+Route::GET('categories/{slug}', 'CategoryController@show')->name('category.show');
 
 
 /**
  * Create a category
  */
-Route::POST('category', 'CategoryController@store')->name('category.store');
+Route::POST('categories', 'CategoryController@store')->name('category.store');
+
+
+/**
+ * Update a category
+ */
+Route::PUT('categories/{slug}', 'CategoryController@update')->name('category.update');
 
 
 /**
  * Delete category
  */
-Route::Delete('category/{id}','CategoryController@destroy')->name('category.delete');
+Route::Delete('categories/{slug}','CategoryController@destroy')->name('category.delete');
 

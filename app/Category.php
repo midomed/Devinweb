@@ -3,8 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use File;
-use ImgUploader;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Http\JsonResponse;
 class Category extends Model
 {
@@ -34,19 +36,25 @@ class Category extends Model
      * delete attached image
      * @return JsonResponse
      */
-    private function deleteAttachedImage()
+    public function deleteAttachedImage()
     {
         try {
-            $catgory_img = Image::where('imageable_type','category')->where('imageable_id',$this->id);
-            $image = $catgory_img->file_name;
-            if (!empty($image)) {
-                File::delete(ImgUploader::real_public_path()  . $image);
-                File::delete(ImgUploader::real_public_path()  . $image);
-                File::delete(ImgUploader::real_public_path() . $image);
-                $catgory_img->delete();
+            if($this->image){
+                Storage::disk('public')->delete('categories/'.$this->image->file_name);
+                $this->image()->delete();
             }
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'Model dont\t existe'], JsonResponse::HTTP_CONFLICT);
+
+        } catch (\Exception $ex) {
+            return response()->json(['message' => $ex->getMessage()], JsonResponse::HTTP_CONFLICT);
         }
+    }
+
+
+    /**
+     * Get the courses for the category.
+     */
+    public function courses()
+    {
+        return $this->hasMany('App\Course', 'category_id');
     }
 }

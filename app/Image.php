@@ -19,7 +19,7 @@ class Image extends Model
      *
      * @var array
      */
-    protected $fillable = ['file_name','imageable_type','imageable_id','slug'];
+    protected $fillable = ['file_name','imageable_type','imageable_id'];
 
     /**
      * Get the owning imageable model.

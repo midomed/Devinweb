@@ -4,22 +4,28 @@
 /**
  *  get list of courses
  */
-Route::GET('course', 'CourseController@index')->name('course.index');
+Route::GET('courses', 'CourseController@index')->name('course.index');
 
 
 /**
  *  get one course
  */
-Route::GET('course/{id}', 'CourseController@index')->name('course.index');
+Route::GET('courses/{slug}', 'CourseController@show')->name('course.show');
 
 
 /**
  * Create a course
  */
-Route::POST('course', 'CourseController@store')->name('course.store');
+Route::POST('courses', 'CourseController@store')->name('course.store');
+
+
+/**
+ * Update a course
+ */
+Route::PUT('courses/{slug}', 'CourseController@update')->name('course.update');
 
 
 /**
  * Delete course
  */
-Route::Delete('course/{id}','CourseController@destroy')->name('course.delete');
+Route::Delete('courses/{slug}','CourseController@destroy')->name('course.delete');

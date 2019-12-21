@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::namespace('API\Admin')->as('api.admin.')->group( function ()  {
+    $real_path = realpath(__DIR__) . DIRECTORY_SEPARATOR . 'admin_route' . DIRECTORY_SEPARATOR;
+    include_once($real_path . 'category.php');
+    include_once($real_path . 'course.php');
 });
